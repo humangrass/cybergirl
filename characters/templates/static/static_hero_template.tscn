@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://ersa2341422q"]
+
+[ext_resource type="Texture2D" uid="uid://dghag31oa3mgh" path="res://icon.svg" id="1_m17x1"]
+[ext_resource type="Script" path="res://characters/templates/static/static_hero_template.gd" id="1_wr84b"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vyee8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_m17x1")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qgqar"]
+size = Vector2(128, 128)
+
+[node name="StaticHeroTemplate" type="CharacterBody2D"]
+script = ExtResource("1_wr84b")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_vyee8")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_qgqar")

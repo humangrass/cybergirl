@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://bv0bgtvrynb54"]
+
+[ext_resource type="Script" path="res://scenes/levels/template/level_template.gd" id="1_w6ac1"]
+[ext_resource type="PackedScene" uid="uid://d4lojbxejalbb" path="res://scenes/interfaces/pause_menu/pause_menu.tscn" id="2_gcj2j"]
+
+[node name="LevelTemplate" type="Node2D"]
+script = ExtResource("1_w6ac1")
+
+[node name="TileMap" type="TileMap" parent="."]
+format = 2
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("2_gcj2j")]

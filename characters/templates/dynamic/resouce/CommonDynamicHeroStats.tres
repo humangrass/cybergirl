@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="DynamicHeroData" load_steps=2 format=3 uid="uid://dubdjmlwescme"]
+
+[ext_resource type="Script" path="res://characters/templates/dynamic/resouce/dynamic_hero_data.gd" id="1_n2gt4"]
+
+[resource]
+script = ExtResource("1_n2gt4")
+speed_scale = 1.0
+acceleration_scale = 1.0
+friction_scale = 1.0
+speed = 100.0
+acceleration = 600.0
+friction = 800.0
+gravity_scale = 1.0
+air_resistance = 200.0
+air_acceleration = 400.0
+jump_velocity = -300.0
+max_jumps = 3
+second_jump_scale = 0.8
+is_wall_jump_enabled = false
+max_hp = 20.0
+hp = 20.0
+melee_attack = 4.0
+melee_attack_range = 100.0
+range_attack = 1.5
+range_attack_radius = 1.0
+range_attack_lifetime = 5.0
+money = 10
+biomaterial = 10
+metall = 10
