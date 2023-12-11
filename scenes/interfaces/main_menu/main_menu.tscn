@@ -7,6 +7,7 @@ offset_right = 1152.0
 offset_bottom = 648.0
 color = Color(0, 0, 0, 1)
 script = ExtResource("1_t3ywm")
+first_level = "res://scenes/levels/level_1.tscn"
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 0

@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://pm57vne4cgje"]
+
+[ext_resource type="PackedScene" uid="uid://c7nw78smgtnly" path="res://characters/templates/dynamic/dynamic_hero_template.tscn" id="1_kxywq"]
+[ext_resource type="Shader" uid="uid://2kkcbhx6o08r" path="res://common/shaders/hit_flash.tres" id="2_oeqa1"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ep8vw"]
+resource_local_to_scene = true
+shader = ExtResource("2_oeqa1")
+shader_parameter/enabled = false
+shader_parameter/tint = Color(1, 1, 1, 1)
+
+[node name="Player" instance=ExtResource("1_kxywq")]
+scale = Vector2(0.1, 0.1)
+is_player = true
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D" parent="." index="0"]
+material = SubResource("ShaderMaterial_ep8vw")
+
+[node name="Camera2D" parent="." index="6"]
+zoom = Vector2(3, 3)
