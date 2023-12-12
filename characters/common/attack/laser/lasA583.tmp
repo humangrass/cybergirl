@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://c2ta6dqqh4iw0"]
+
+[ext_resource type="Texture2D" uid="uid://drip4xjk1ldj4" path="res://characters/common/attack/laser/Begin.png" id="1_3tj8e"]
+[ext_resource type="Script" path="res://characters/common/attack/laser/laser_beam.gd" id="1_5lg04"]
+[ext_resource type="Texture2D" uid="uid://dkyntfy5wyxqb" path="res://characters/common/attack/laser/Beam.png" id="2_sdjmn"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_6x7nv"]
+blend_mode = 1
+
+[node name="LaserBeam" type="Node2D"]
+script = ExtResource("1_5lg04")
+
+[node name="Begin" type="Sprite2D" parent="."]
+texture = ExtResource("1_3tj8e")
+
+[node name="Beam" type="Sprite2D" parent="."]
+material = SubResource("CanvasItemMaterial_6x7nv")
+texture = ExtResource("2_sdjmn")
+offset = Vector2(50, 0)
+region_enabled = true
+region_rect = Rect2(0, 0, 100, 24)
+
+[node name="End" type="Marker2D" parent="."]
+position = Vector2(100, 0)
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(100, 0)
