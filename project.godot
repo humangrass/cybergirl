@@ -20,6 +20,17 @@ config/icon="res://icon.svg"
 SceneSwitcher="*res://scripts/scene_switcher.gd"
 Transition="*res://scenes/common/transition/transition.tscn"
 
+[file_customization]
+
+folder_colors={
+"res://assets/": "yellow",
+"res://characters/": "pink",
+"res://common/": "green",
+"res://models/": "red",
+"res://scenes/": "teal",
+"res://scripts/": "purple"
+}
+
 [input]
 
 ui_left={

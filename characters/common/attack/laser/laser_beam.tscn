@@ -1,12 +1,65 @@
-[gd_scene load_steps=2 format=3 uid="uid://df368w8cu4tp2"]
+[gd_scene load_steps=6 format=3 uid="uid://df368w8cu4tp2"]
 
 [ext_resource type="Script" path="res://characters/common/attack/laser/laser_beam.gd" id="1_5lg04"]
+[ext_resource type="Texture2D" uid="uid://b0vnm76axpyvb" path="res://assets/glowing_circle.png" id="2_s6wn0"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_oe8gl"]
+resource_local_to_scene = true
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(0, 0, 0)
+emission_shape = 1
+emission_sphere_radius = 1.0
+spread = 21.449
+initial_velocity_min = 1000.0
+initial_velocity_max = 1000.0
+gravity = Vector3(0, 0, 0)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_a3qhv"]
+resource_local_to_scene = true
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(0, 0, 0)
+emission_shape = 1
+emission_sphere_radius = 1.0
+spread = 71.916
+initial_velocity_min = 1000.0
+initial_velocity_max = 1000.0
+gravity = Vector3(0, 0, 0)
+
+[sub_resource type="Environment" id="Environment_jqo5d"]
+background_mode = 3
+glow_enabled = true
+glow_bloom = 1.0
+glow_blend_mode = 0
 
 [node name="LaserBeam" type="RayCast2D"]
 target_position = Vector2(100, 0)
 script = ExtResource("1_5lg04")
 
 [node name="Line2D" type="Line2D" parent="."]
-default_color = Color(0, 0.72549, 0.756863, 1)
+points = PackedVector2Array(0, 0, 100, 0)
+default_color = Color(0, 0.8, 0.8, 1)
 
 [node name="Marker2D" type="Marker2D" parent="."]
+
+[node name="CastingParticles" type="GPUParticles2D" parent="."]
+visible = false
+light_mask = 0
+process_material = SubResource("ParticleProcessMaterial_oe8gl")
+texture = ExtResource("2_s6wn0")
+lifetime = 0.5
+randomness = 0.13
+collision_base_size = 0.0
+local_coords = true
+
+[node name="CollisionParticles" type="GPUParticles2D" parent="."]
+light_mask = 0
+scale = Vector2(0.99793, 0.603936)
+process_material = SubResource("ParticleProcessMaterial_a3qhv")
+texture = ExtResource("2_s6wn0")
+lifetime = 0.2
+speed_scale = 1.55
+collision_base_size = 0.0
+local_coords = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_jqo5d")
