@@ -20,6 +20,10 @@ config/icon="res://icon.svg"
 SceneSwitcher="*res://scripts/scene_switcher.gd"
 Transition="*res://scenes/common/transition/transition.tscn"
 
+[display]
+
+window/stretch/mode="viewport"
+
 [file_customization]
 
 folder_colors={

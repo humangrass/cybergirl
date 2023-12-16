@@ -21,6 +21,7 @@ func _ready():
 	line.width = min_line_width
 	collision_particles.emitting = false
 
+
 func _process(delta: float) -> void:
 	handle_action(delta)
 	is_emmiting = is_colliding() and line.visible
@@ -37,15 +38,20 @@ func _process(delta: float) -> void:
 		ray.target_position = cast_point
 
 		if is_colliding():
+			if not collision_particles.visible:
+				collision_particles.show()
 			cast_point = to_local(get_collision_point())
 			current_length = cast_point.length()
 		else:
+			if collision_particles.visible:
+				collision_particles.hide()
 			current_length = lerp(0.0, max_length, progress)
 		line.points[1] = cast_point
-
+		
 		collision_particles.process_material.direction = -Vector3(mouse_normal[0], mouse_normal[1], 0)
 		collision_particles.position = cast_point
 	collision_particles.emitting = is_emmiting
+
 
 
 func handle_action(delta):

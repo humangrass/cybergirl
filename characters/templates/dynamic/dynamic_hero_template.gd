@@ -82,12 +82,12 @@ func handle_jump():
 	var is_coyote_jump = coyote_jump_timer.time_left > 0.0
 	var is_wall_jump = is_on_wall() and hero_data.is_wall_jump_enabled
 
-	if is_on_floor() or is_coyote_jump and not is_wall_jump:
+	if is_on_floor() or is_coyote_jump:
 		if Input.is_action_just_pressed("ui_up") and is_player:
 			velocity.y = hero_data.jump_velocity
 			jumps_left -= 1
 
-	if not is_on_floor() and not is_coyote_jump and not is_wall_jump:
+	if not is_on_floor() and not is_coyote_jump:
 		if Input.is_action_just_pressed("ui_up") and jumps_left > 0 and is_player:
 			velocity.y = hero_data.jump_velocity * hero_data.second_jump_scale
 			jumps_left -= 1

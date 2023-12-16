@@ -42,3 +42,4 @@ func _on_settings_pressed():
 func _on_menu_pressed():
 	if menu_scene:
 		SceneSwitcher.switch_scene(menu_scene)
+		Engine.time_scale = 1
