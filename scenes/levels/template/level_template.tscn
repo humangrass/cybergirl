@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://d4lojbxejalbb" path="res://scenes/interfaces/pause_menu/pause_menu.tscn" id="2_gcj2j"]
 
 [node name="LevelTemplate" type="Node2D"]
+z_index = 1
 script = ExtResource("1_w6ac1")
 
 [node name="BWTilemap" parent="." instance=ExtResource("2_aewpn")]

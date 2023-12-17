@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://characters/templates/dynamic/resouce/dynamic_hero_data.gd" id="1_n2gt4"]
 
 [resource]
+resource_local_to_scene = true
 script = ExtResource("1_n2gt4")
 speed_scale = 1.0
 acceleration_scale = 1.0
@@ -21,6 +22,7 @@ max_hp = 20.0
 hp = 20.0
 melee_attack = 4.0
 melee_attack_range = 100.0
+is_laser_enabled = true
 range_attack = 1.5
 range_attack_radius = 1.0
 range_attack_lifetime = 5.0

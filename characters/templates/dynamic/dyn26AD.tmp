@@ -6,9 +6,6 @@
 [ext_resource type="Texture2D" uid="uid://bpakqytge4rjm" path="res://characters/templates/dynamic/assets/sayaana_idle.png" id="5_o865f"]
 [ext_resource type="Texture2D" uid="uid://de0nrk52mwvhw" path="res://characters/templates/dynamic/assets/sayaana_run.png" id="6_28hif"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_uyajq"]
-size = Vector2(40, 130)
-
 [sub_resource type="Animation" id="Animation_g1fyt"]
 length = 0.001
 
@@ -20,6 +17,9 @@ _data = {
 "RESET": SubResource("Animation_g1fyt"),
 "hit_flash": SubResource("Animation_ex7oc")
 }
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uyajq"]
+size = Vector2(40, 130)
 
 [sub_resource type="Animation" id="Animation_req7b"]
 length = 0.001
@@ -197,12 +197,6 @@ graph_offset = Vector2(-25, -26)
 [node name="DynamicHeroTemplate" type="CharacterBody2D"]
 script = ExtResource("1_q18pr")
 hero_data = ExtResource("2_mgynd")
-metadata/_edit_group_ = true
-
-[node name="HeroCollision" type="CollisionShape2D" parent="."]
-position = Vector2(-7.10543e-15, -4.76837e-07)
-scale = Vector2(1, 1)
-shape = SubResource("RectangleShape2D_uyajq")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(-1.19209e-07, -5)
@@ -214,6 +208,9 @@ hframes = 2
 libraries = {
 "": SubResource("AnimationLibrary_485ys")
 }
+
+[node name="HeroCollision" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_uyajq")
 
 [node name="CoyoteJumpTimer" type="Timer" parent="."]
 wait_time = 0.2
@@ -239,6 +236,12 @@ parameters/Move/blend_position = 0
 [node name="LaserBeam" parent="." instance=ExtResource("5_6o74v")]
 
 [node name="PlatformDetector" type="RayCast2D" parent="."]
+position = Vector2(0, 64)
+target_position = Vector2(0, 32)
+collision_mask = 5
+collide_with_areas = true
+
+[node name="PlatformDetector2" type="RayCast2D" parent="."]
 position = Vector2(0, 64)
 target_position = Vector2(0, 32)
 collision_mask = 5

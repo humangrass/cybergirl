@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3 uid="uid://bc2eotm42pbi5"]
+
+[ext_resource type="Texture2D" uid="uid://dghag31oa3mgh" path="res://icon.svg" id="1_leb1r"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_t1ppa"]
+size = Vector2(128, 128)
+
+[node name="OneWayPlatform" type="Sprite2D"]
+light_mask = 4
+visibility_layer = 4
+position = Vector2(0, -2.38419e-07)
+scale = Vector2(0.1875, 0.03125)
+texture = ExtResource("1_leb1r")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." groups=["Platform"]]
+light_mask = 4
+visibility_layer = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+light_mask = 4
+visibility_layer = 4
+z_index = 1
+position = Vector2(0, 7.62941e-06)
+shape = SubResource("RectangleShape2D_t1ppa")
+one_way_collision = true

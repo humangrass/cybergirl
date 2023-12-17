@@ -4,11 +4,9 @@ extends CharacterBody2D
 @export var is_player: bool
 
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
-var is_sitting = false
 var default_damage = 0
 
-var air_jump = false
-var jumps_left = 1
+@onready var jumps_left : int
 
 @onready var hero = $"."
 @onready var starting_position = hero.position
@@ -17,35 +15,47 @@ var jumps_left = 1
 @onready var coyote_jump_timer = $CoyoteJumpTimer
 @onready var damage_timer = $DamageTimer
 
-@onready var animated_sprite_2d = $AnimatedSprite2D
+
 @onready var animated_hit_flash = $HitFlashAnimationPlayer
+@onready var sprite_2d = $Sprite2D
+@onready var animation_player = $AnimationPlayer
+@onready var animation_tree : AnimationTree = $AnimationTree
 
-@onready var standing_collision = $StandingCollision
-@onready var sitting_collision = $SittingCollision
+@onready var hero_collision = $HeroCollision
 
+@onready var laser_beam = $LaserBeam
+@onready var platform_detector : RayCast2D = $PlatformDetector
+
+
+var default_sprite_scale
 
 func _ready():
+	if not hero_data.is_laser_enabled:
+		laser_beam.queue_free()
+	animation_tree.active = true
+	default_sprite_scale = sprite_2d.scale.y
 	if not is_player:
 		camera.enabled = is_player
 		camera.hide()
 
 
 func _physics_process(delta):
-	handle_sitting()
-
+	var direction = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 	if hero.position.y > 1000:
 		restart()
-	apply_gravity(delta)
-	handle_jump()
 
-	var input_axis = Input.get_axis("ui_left", "ui_right")
-	update_animations(input_axis)
-	handle_acceleration(input_axis, delta)
-	apply_friction(input_axis, delta)
-	apply_air_resistance(input_axis, delta)
+	update_animations(direction)
+
+	apply_gravity(delta)
+	apply_friction(direction[0], delta)
+	apply_air_resistance(direction[0], delta)
+	handle_acceleration(direction[0], delta)
+	handle_jump()
+	handle_sitting()
 
 	var was_on_floor = is_on_floor()
 	move_and_slide()
+
 	var just_left_ledge = was_on_floor and not is_on_floor() and velocity.y >= 0
 	if just_left_ledge:
 		coyote_jump_timer.start()
@@ -59,15 +69,15 @@ func apply_gravity(delta):
 		velocity.y += gravity * hero_data.gravity_scale * delta
 
 
-func update_animations(input_axis):
-	if input_axis != 0:
-		animated_sprite_2d.flip_h = input_axis < 0
-		animated_sprite_2d.play("run")
-	else:
-		animated_sprite_2d.play("idle")
-		
+func update_animations(direction):
+	animation_tree.set("parameters/Move/blend_position", direction[0])
+	sprite_2d.flip_h = direction[0] < 0
 	if not is_on_floor():
-		animated_sprite_2d.play("jump")
+		animation_player.play("jump")
+	elif direction[0] != 0:
+		animation_player.play("run")
+	elif direction[0] == 0:
+		animation_player.play("idle")
 
 
 func collect_money(denomination=1):
@@ -77,7 +87,6 @@ func collect_money(denomination=1):
 #region Movements
 func handle_jump():
 	if is_on_floor():
-		air_jump = true
 		jumps_left = hero_data.max_jumps
 	var is_coyote_jump = coyote_jump_timer.time_left > 0.0
 	var is_wall_jump = is_on_wall() and hero_data.is_wall_jump_enabled
@@ -91,9 +100,8 @@ func handle_jump():
 		if Input.is_action_just_pressed("ui_up") and jumps_left > 0 and is_player:
 			velocity.y = hero_data.jump_velocity * hero_data.second_jump_scale
 			jumps_left -= 1
-			air_jump = false
 
-	# TODO: с этой фичей можно вылететь за пределы карты
+
 	if is_wall_jump and not is_on_floor():
 		var wall_normal = get_wall_normal()
 
@@ -110,18 +118,11 @@ func handle_jump():
 
 
 func handle_sitting():
-	if Input.is_action_pressed("ui_down") and is_player:
-		is_sitting = true
-	else: is_sitting = false
-
-	if is_sitting:
-		sitting_collision.disabled = false
-		standing_collision.disabled = true
-		animated_sprite_2d.scale = Vector2(1, 0.5)
-	else:
-		sitting_collision.disabled = true
-		standing_collision.disabled = false
-		animated_sprite_2d.scale = Vector2(1, 1)
+	if platform_detector.is_colliding():
+		var colliding_object = platform_detector.get_collider()
+		if colliding_object and colliding_object.is_in_group("Platform"):
+			if Input.is_action_pressed("ui_down") and is_player:
+				hero.position.y += 1
 
 
 func handle_acceleration(input_axis, delta):
@@ -160,18 +161,20 @@ func handle_damage(is_need_to_start_timer: bool, damage: int):
 
 
 func take_damage(damage):
-	if damage_timer.timeout and damage_timer.autostart:
+	if damage_timer.timeout and damage_timer.autostart and is_player:
 		# invulnerability while flashing
 		if not animated_hit_flash.is_playing():
 			animated_hit_flash.play("hit_flash")
 			hero_data.hp -= damage
 		if hero_data.hp <= 0:
 			restart()
-
+	else:
+		# for npc
+		animated_hit_flash.play("hit_flash")
+		hero_data.hp -= damage
 
 func restart():
 	hero_data.hp = hero_data.max_hp
 	global_position = starting_position
 
 #endregion
-

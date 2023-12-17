@@ -1,24 +1,49 @@
 [gd_scene load_steps=5 format=3 uid="uid://pm57vne4cgje"]
 
 [ext_resource type="PackedScene" uid="uid://c7nw78smgtnly" path="res://characters/templates/dynamic/dynamic_hero_template.tscn" id="1_kxywq"]
-[ext_resource type="Shader" uid="uid://2kkcbhx6o08r" path="res://common/shaders/hit_flash.tres" id="2_oeqa1"]
+[ext_resource type="Script" path="res://characters/templates/dynamic/resouce/dynamic_hero_data.gd" id="2_4om7j"]
 [ext_resource type="PackedScene" uid="uid://df368w8cu4tp2" path="res://characters/common/attack/laser/laser_beam.tscn" id="3_78pdg"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ep8vw"]
+[sub_resource type="Resource" id="Resource_6xs54"]
 resource_local_to_scene = true
-shader = ExtResource("2_oeqa1")
-shader_parameter/enabled = false
-shader_parameter/tint = Color(1, 1, 1, 1)
+script = ExtResource("2_4om7j")
+speed_scale = 1.0
+acceleration_scale = 1.0
+friction_scale = 1.0
+speed = 100.0
+acceleration = 600.0
+friction = 800.0
+gravity_scale = 1.0
+air_resistance = 200.0
+air_acceleration = 400.0
+jump_velocity = -300.0
+max_jumps = 4
+second_jump_scale = 0.8
+is_wall_jump_enabled = true
+max_hp = 20.0
+hp = 20.0
+melee_attack = 4.0
+melee_attack_range = 100.0
+is_laser_enabled = true
+range_attack = 1.5
+range_attack_radius = 1.0
+range_attack_lifetime = 5.0
+money = 10
+biomaterial = 10
+metall = 10
 
 [node name="Player" instance=ExtResource("1_kxywq")]
-scale = Vector2(0.1, 0.1)
+z_index = 10
+scale = Vector2(0.11, 0.11)
+collision_layer = 5
+collision_mask = 5
+hero_data = SubResource("Resource_6xs54")
 is_player = true
-metadata/_edit_group_ = true
 
-[node name="AnimatedSprite2D" parent="." index="0"]
-material = SubResource("ShaderMaterial_ep8vw")
+[node name="Camera2D" parent="." index="5"]
+zoom = Vector2(4, 4)
 
-[node name="Camera2D" parent="." index="6"]
-zoom = Vector2(3, 3)
+[node name="LaserBeam2" parent="." index="7" instance=ExtResource("3_78pdg")]
 
-[node name="LaserBeam" parent="." index="7" instance=ExtResource("3_78pdg")]
+[node name="PlatformDetector" parent="." index="10"]
+hit_from_inside = true

@@ -23,35 +23,39 @@ func _ready():
 
 
 func _process(delta: float) -> void:
-	handle_action(delta)
-	is_emmiting = is_colliding() and line.visible
+	if ray.enabled:
+		handle_action(delta)
+		is_emmiting = is_colliding() and line.visible
 
-	if line.visible:
-		animation_timer += delta
-		var progress : float = animation_timer / animation_duration
-		if progress > 1:
-			progress = 1
+		if line.visible:
+			animation_timer += delta
+			var progress : float = animation_timer / animation_duration
+			if progress > 1:
+				progress = 1
 
-		var mouse_normal = get_local_mouse_position().normalized()
-		var target : Vector2 = mouse_normal * current_length
-		var cast_point : Vector2 = ray.target_position.lerp(target, delta * slowdown_factor)
-		ray.target_position = cast_point
+			var mouse_normal = get_local_mouse_position().normalized()
+			var target : Vector2 = mouse_normal * current_length
 
-		if is_colliding():
-			if not collision_particles.visible:
-				collision_particles.show()
-			cast_point = to_local(get_collision_point())
-			current_length = cast_point.length()
-		else:
-			if collision_particles.visible:
-				collision_particles.hide()
-			current_length = lerp(0.0, max_length, progress)
-		line.points[1] = cast_point
-		
-		collision_particles.process_material.direction = -Vector3(mouse_normal[0], mouse_normal[1], 0)
-		collision_particles.position = cast_point
-	collision_particles.emitting = is_emmiting
+			var cast_point = ray.target_position.lerp(target, delta * slowdown_factor)
+			ray.target_position = cast_point
 
+			if is_colliding():
+				if not collision_particles.visible:
+					collision_particles.show()
+				cast_point = to_local(get_collision_point())
+				current_length = cast_point.length()
+			else:
+				if collision_particles.visible:
+					collision_particles.hide()
+				current_length = lerp(0.0, max_length, progress)
+			line.points[1] = cast_point
+			
+			var collision_normal = ray.get_collision_normal()
+			collision_particles.process_material.direction = Vector3(collision_normal.x, collision_normal.y, 0).normalized()
+
+			#collision_particles.process_material.direction = -Vector3(mouse_normal[0], mouse_normal[1], 0)
+			collision_particles.position = cast_point
+		collision_particles.emitting = is_emmiting
 
 
 func handle_action(delta):
