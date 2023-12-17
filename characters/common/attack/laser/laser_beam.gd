@@ -23,8 +23,9 @@ func _ready():
 
 
 func _process(delta: float) -> void:
+	handle_action(delta)
+	is_emmiting = is_colliding() and line.visible
 	if ray.enabled:
-		handle_action(delta)
 		is_emmiting = is_colliding() and line.visible
 
 		if line.visible:
@@ -52,15 +53,14 @@ func _process(delta: float) -> void:
 			
 			var collision_normal = ray.get_collision_normal()
 			collision_particles.process_material.direction = Vector3(collision_normal.x, collision_normal.y, 0).normalized()
-
-			#collision_particles.process_material.direction = -Vector3(mouse_normal[0], mouse_normal[1], 0)
 			collision_particles.position = cast_point
-		collision_particles.emitting = is_emmiting
+	collision_particles.emitting = is_emmiting
 
 
 func handle_action(delta):
 	if Input.is_action_pressed("mouse_left"):
 		if not line.visible:
+			ray.enabled=true
 			animation_timer = 0.0
 			ray.target_position = get_local_mouse_position().normalized()
 			line.show()
@@ -71,4 +71,5 @@ func handle_action(delta):
 			line.width -= 1
 		else:
 			if line.visible:
+				ray.enabled=false
 				line.hide()

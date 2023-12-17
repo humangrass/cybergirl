@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://cjvrcinog714m"]
+
+[ext_resource type="Script" path="res://models/areas/hazard/hazard_area.gd" id="1_a7luc"]
+
+[node name="HazardArea" type="Area2D" groups=["Hazard"]]
+light_mask = 4
+visibility_layer = 4
+script = ExtResource("1_a7luc")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

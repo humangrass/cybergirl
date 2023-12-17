@@ -25,6 +25,8 @@ hp = 20.0
 melee_attack = 4.0
 melee_attack_range = 100.0
 is_laser_enabled = true
+laser_attack = 0.1
+laser_attack_multiplier = 1.0
 range_attack = 1.5
 range_attack_radius = 1.0
 range_attack_lifetime = 5.0
@@ -32,7 +34,7 @@ money = 10
 biomaterial = 10
 metall = 10
 
-[node name="Player" instance=ExtResource("1_kxywq")]
+[node name="Player" groups=["Player"] instance=ExtResource("1_kxywq")]
 z_index = 10
 scale = Vector2(0.11, 0.11)
 collision_layer = 5

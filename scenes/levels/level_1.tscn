@@ -1,10 +1,13 @@
-[gd_scene load_steps=7 format=3 uid="uid://4npuiswoh8e2"]
+[gd_scene load_steps=10 format=3 uid="uid://4npuiswoh8e2"]
 
 [ext_resource type="PackedScene" uid="uid://bv0bgtvrynb54" path="res://scenes/levels/template/level_template.tscn" id="1_vwihd"]
 [ext_resource type="PackedScene" uid="uid://pm57vne4cgje" path="res://characters/player/player.tscn" id="2_k2fb5"]
 [ext_resource type="Script" path="res://characters/templates/dynamic/resouce/dynamic_hero_data.gd" id="3_8ocja"]
 [ext_resource type="PackedScene" uid="uid://bc2eotm42pbi5" path="res://models/platforms/one_way/one_way_platform.tscn" id="4_k4hir"]
 [ext_resource type="PackedScene" uid="uid://bxp2bdhjfgayo" path="res://models/platforms/moving/moving_platform.tscn" id="5_wnloj"]
+[ext_resource type="PackedScene" uid="uid://dnohxerva5lny" path="res://models/objects/heart/heart.tscn" id="6_0na2w"]
+[ext_resource type="PackedScene" uid="uid://dnmruv4tsoprt" path="res://models/objects/spikes/spikes.tscn" id="7_ffnr1"]
+[ext_resource type="PackedScene" uid="uid://ccl7srwabjcb5" path="res://characters/enemies/cube/cube.tscn" id="8_sbx62"]
 
 [sub_resource type="Resource" id="Resource_wh1mi"]
 resource_local_to_scene = true
@@ -27,6 +30,8 @@ hp = 20.0
 melee_attack = 4.0
 melee_attack_range = 100.0
 is_laser_enabled = true
+laser_attack = 0.1
+laser_attack_multiplier = 1.0
 range_attack = 1.5
 range_attack_radius = 1.0
 range_attack_lifetime = 5.0
@@ -54,3 +59,33 @@ position = Vector2(160, -26)
 
 [node name="MovingPlatform" parent="." index="6" instance=ExtResource("5_wnloj")]
 position = Vector2(326, -156)
+
+[node name="Heart" parent="." index="7" instance=ExtResource("6_0na2w")]
+position = Vector2(-102, 51)
+
+[node name="Heart2" parent="." index="8" instance=ExtResource("6_0na2w")]
+position = Vector2(-40, -25)
+
+[node name="Heart3" parent="." index="9" instance=ExtResource("6_0na2w")]
+position = Vector2(40, -120)
+
+[node name="Heart4" parent="." index="10" instance=ExtResource("6_0na2w")]
+position = Vector2(-18, -250)
+
+[node name="Heart5" parent="." index="11" instance=ExtResource("6_0na2w")]
+position = Vector2(29, -193)
+
+[node name="Heart6" parent="." index="12" instance=ExtResource("6_0na2w")]
+position = Vector2(129, -249)
+
+[node name="Spikes" parent="." index="13" instance=ExtResource("7_ffnr1")]
+position = Vector2(32, 64)
+
+[node name="Spikes2" parent="." index="14" instance=ExtResource("7_ffnr1")]
+position = Vector2(16, 64)
+
+[node name="Spikes3" parent="." index="15" instance=ExtResource("7_ffnr1")]
+position = Vector2(-176, 64)
+
+[node name="Enemy" parent="." index="16" instance=ExtResource("8_sbx62")]
+position = Vector2(-104, 46)

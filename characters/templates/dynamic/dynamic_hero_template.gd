@@ -24,6 +24,7 @@ var default_damage = 0
 @onready var hero_collision = $HeroCollision
 
 @onready var laser_beam = $LaserBeam
+
 @onready var platform_detector : RayCast2D = $PlatformDetector
 
 
@@ -53,6 +54,8 @@ func _physics_process(delta):
 	handle_jump()
 	handle_sitting()
 
+	handle_laser_beam()
+
 	var was_on_floor = is_on_floor()
 	move_and_slide()
 
@@ -71,17 +74,18 @@ func apply_gravity(delta):
 
 func update_animations(direction):
 	animation_tree.set("parameters/Move/blend_position", direction[0])
-	sprite_2d.flip_h = direction[0] < 0
-	if not is_on_floor():
-		animation_player.play("jump")
-	elif direction[0] != 0:
+	if direction[0] != 0:
+		sprite_2d.flip_h = direction[0] < 0
 		animation_player.play("run")
+	elif not is_on_floor():
+		animation_player.play("jump")
 	elif direction[0] == 0:
 		animation_player.play("idle")
 
 
 func collect_money(denomination=1):
 	hero_data.money += denomination
+	#hero_data.laser_attack_multiplier += 0.5
 
 
 #region Movements
@@ -177,4 +181,12 @@ func restart():
 	hero_data.hp = hero_data.max_hp
 	global_position = starting_position
 
+#endregion
+
+#region Attack
+func handle_laser_beam():
+	if laser_beam.is_colliding():
+		var colliding_object = laser_beam.get_collider()
+		if colliding_object and colliding_object.is_in_group("Enemy"):
+			colliding_object.take_damage(hero_data.laser_attack * hero_data.laser_attack_multiplier)
 #endregion

@@ -30,6 +30,9 @@ extends Resource
 @export var melee_attack_range = 100.0
 
 @export var is_laser_enabled : bool = false
+@export var laser_attack : float = 0.1
+@export var laser_attack_multiplier : float = 1
+
 @export var range_attack = 1.5
 @export var range_attack_radius = 1.0
 @export var range_attack_lifetime = 5.0
