@@ -7,7 +7,6 @@
 radius = 5.09902
 
 [node name="Heart" type="Area2D" groups=["Bonus", "Hearts"]]
-light_mask = 2
 script = ExtResource("1_5s1ar")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

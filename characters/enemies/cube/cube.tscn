@@ -1,34 +1,18 @@
-[gd_scene load_steps=7 format=3 uid="uid://ccl7srwabjcb5"]
+[gd_scene load_steps=5 format=3 uid="uid://ccl7srwabjcb5"]
 
 [ext_resource type="Script" path="res://characters/enemies/cube/cube.gd" id="1_f84pp"]
 [ext_resource type="PackedScene" uid="uid://cjvrcinog714m" path="res://models/areas/hazard/hazard_area.tscn" id="2_kthq2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pfaca"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_rq2j0"]
-size = Vector2(408, 41)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_lt8jy"]
-size = Vector2(20, 54)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ypbkr"]
-size = Vector2(22, 23)
+size = Vector2(22, 24)
 
-[node name="Enemy" type="CharacterBody2D" groups=["Enemy"]]
+[node name="Cube" type="CharacterBody2D" groups=["Enemy"]]
 script = ExtResource("1_f84pp")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_pfaca")
-
-[node name="DetectionArea" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
-position = Vector2(0, -10.5)
-shape = SubResource("RectangleShape2D_rq2j0")
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="DetectionArea"]
-position = Vector2(0, 17)
-shape = SubResource("RectangleShape2D_lt8jy")
 
 [node name="ActionTimer" type="Timer" parent="."]
 autostart = true
@@ -43,7 +27,7 @@ color = Color(0.847059, 0.0862745, 0.337255, 1)
 [node name="HazardArea" parent="." instance=ExtResource("2_kthq2")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HazardArea"]
-position = Vector2(0, 0.5)
+position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_ypbkr")
 
-[connection signal="body_entered" from="DetectionArea" to="." method="_on_detection_area_body_entered"]
+[node name="Target" type="RayCast2D" parent="."]

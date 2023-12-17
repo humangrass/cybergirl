@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://4npuiswoh8e2"]
+[gd_scene load_steps=11 format=3 uid="uid://4npuiswoh8e2"]
 
 [ext_resource type="PackedScene" uid="uid://bv0bgtvrynb54" path="res://scenes/levels/template/level_template.tscn" id="1_vwihd"]
 [ext_resource type="PackedScene" uid="uid://pm57vne4cgje" path="res://characters/player/player.tscn" id="2_k2fb5"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://dnohxerva5lny" path="res://models/objects/heart/heart.tscn" id="6_0na2w"]
 [ext_resource type="PackedScene" uid="uid://dnmruv4tsoprt" path="res://models/objects/spikes/spikes.tscn" id="7_ffnr1"]
 [ext_resource type="PackedScene" uid="uid://ccl7srwabjcb5" path="res://characters/enemies/cube/cube.tscn" id="8_sbx62"]
+[ext_resource type="PackedScene" uid="uid://cywj24j7ileg4" path="res://characters/enemies/turret/turret.tscn" id="9_l714p"]
 
 [sub_resource type="Resource" id="Resource_wh1mi"]
 resource_local_to_scene = true
@@ -89,3 +90,6 @@ position = Vector2(-176, 64)
 
 [node name="Enemy" parent="." index="16" instance=ExtResource("8_sbx62")]
 position = Vector2(-104, 46)
+
+[node name="Turret" parent="." index="17" instance=ExtResource("9_l714p")]
+position = Vector2(90, -35)

@@ -7,25 +7,26 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 @export var jump_impulse = 300
 
 @onready var start_coords = $".".position
-@onready var detection_area = $DetectionArea
 @onready var action_timer = $ActionTimer
 @onready var hazard = $HazardArea
 @onready var color_rect = $ColorRect
 
-var is_sleeping = true
+var player
 
+@onready var target = $Target
 
 @export var hp : float = 20
 
 
 func _ready():
 	hazard.damage = base_damage
+	player = get_parent().find_child("Player")
 
 func _process(delta):
 	apply_gravity(delta)
-
-	if is_sleeping:
-		go_to(start_coords)
+	aim()
+	if target.target_position.length() < 200:
+		go_to(player.position)
 	if action_timer.timeout and is_on_floor():
 		velocity.y -= jump_impulse
 #		rotate(90)
@@ -40,11 +41,8 @@ func apply_gravity(delta):
 		velocity.y += gravity * 1 * delta
 
 
-func _on_detection_area_body_entered(body):
-	if body.is_in_group("Player"):
-		is_sleeping = false
-		go_to(body.position)
-
+func aim():
+	target.target_position = to_local(player.position)
 
 
 func go_to(target_position: Vector2):
@@ -60,6 +58,8 @@ func is_need_to_kill():
 
 
 func take_damage(damage):
-	hp -= damage / 5
-	color_rect.color.r = color_rect.color.r - damage * 0.01
+	hp -= damage
+	color_rect.color.r = color_rect.color.r - damage * 0.03
+	color_rect.color.b = color_rect.color.b - damage * 0.03
+	color_rect.color.g = color_rect.color.g - damage * 0.03
 	

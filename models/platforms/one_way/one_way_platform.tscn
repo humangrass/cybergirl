@@ -6,14 +6,14 @@
 size = Vector2(128, 128)
 
 [node name="OneWayPlatform" type="Sprite2D"]
-light_mask = 4
+light_mask = 0
 visibility_layer = 4
 position = Vector2(0, -2.38419e-07)
 scale = Vector2(0.1875, 0.03125)
 texture = ExtResource("1_leb1r")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." groups=["Platform"]]
-light_mask = 4
+light_mask = 0
 visibility_layer = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
